@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>CreatePlaceAgent</AgentName>
+    <Sequence>
+		<AgentCommand><AgentName>PlaceAgent</AgentName>
+  			<Ask><action><actionName>AddPlace</actionName></action></Ask>
+		</AgentCommand>
+		<AgentCommand><AgentName>CreatePlaceAgent</AgentName></AgentCommand>
+	</Sequence>
+</Agent>

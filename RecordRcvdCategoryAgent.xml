@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>RecordRcvdCategoryAgent</AgentName>
+	<Replicate>
+        <Sequence>
+            <Ask><action><actionName>PassCategoryToRecord</actionName></action><internal>true</internal></Ask>
+            <Tell><action><actionName>ShowLinkedCategories</actionName></action></Tell>
+        </Sequence>
+    </Replicate>
+</Agent>

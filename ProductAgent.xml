@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>ProductAgent</AgentName>
+	<ProcessName>Products</ProcessName>
+	<AvatarName>ProductName</AvatarName>
+	<Element>ProductName</Element>
+	<Compose>
+		<Tell><action><actionName>ProductDetail</actionName></action><internal>true</internal></Tell>
+		<Tell><action><actionName>GenProductDetailName</actionName></action><internal>true</internal></Tell>
+		<Sequence>
+			<Ask><action><actionName>GenProductDetailName</actionName></action><internal>true</internal></Ask>
+			<Compose>
+				<AgentCommand><AgentName>PickProductAgent</AgentName></AgentCommand>
+				<AgentCommand><AgentName>PickCategoryAgent</AgentName></AgentCommand>				
+				<AgentCommand><AgentName>Level1</AgentName></AgentCommand>				
+			</Compose>
+		</Sequence>
+	</Compose>
+</Agent>

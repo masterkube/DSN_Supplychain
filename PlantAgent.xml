@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>PlantAgent</AgentName>
+	<ProcessName>Plants</ProcessName>
+	<AvatarName>PlantName</AvatarName>
+	<Element>PlantName</Element>
+	<Element>LocationCoordinates</Element>
+	<Compose>
+		<Tell><action><actionName>PlantInfo</actionName></action></Tell>
+		<Tell><action><actionName>GenPlantInfoName</actionName></action><internal>true</internal></Tell>
+		<Sequence>
+			<Ask><action><actionName>GenPlantInfoName</actionName></action><internal>true</internal></Ask>		
+			<AgentCommand><AgentName>PlatLoopAgent</AgentName></AgentCommand>
+		</Sequence>
+	</Compose>
+</Agent>

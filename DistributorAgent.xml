@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DistributorAgent</AgentName>
+	<ProcessName>Distributors</ProcessName>
+	<AvatarName>DistributorName</AvatarName>
+	<Element>DistributorName</Element>
+	<Element>LocationCoordinates</Element>
+	<Compose>
+		<Tell><action><actionName>DistributorInfo</actionName></action></Tell>
+		<AgentCommand><AgentName>DistributorLoopAgent</AgentName></AgentCommand>
+	</Compose>
+</Agent>

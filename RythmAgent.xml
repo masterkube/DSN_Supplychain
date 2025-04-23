@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>RythmAgent</AgentName>
+	<ProcessName>Rythm</ProcessName>
+	<AvatarName>RythmName</AvatarName>
+	<Element>RythmName</Element>
+	<Compose>
+		<Tell><action><actionName>RythmInfo</actionName></action></Tell>
+        <Choice>
+            <ChoiceOption>
+                <Ask><action><actionName>PickRythm</actionName></action><internal>true</internal></Ask>
+                <OptionAction>
+                    <Compose>
+                        <Tell><action><actionName>CreateRythm</actionName></action><internal>true</internal></Tell>
+                        <Sequence>
+                            <AgentCommand>
+                                <AgentName>NextRythmAgent</AgentName>
+                                <Ask><action><actionName>CreateRythm</actionName></action><internal>true</internal></Ask>
+                            </AgentCommand>
+                            <Tell><action><actionName>GetInfo</actionName></action><internal>true</internal></Tell>
+                            <Compose>
+                                <Ask><action><actionName>SendInfo</actionName></action><internal>true</internal></Ask>
+                                <AgentCommand><AgentName>SignallingAgent</AgentName></AgentCommand>
+                            </Compose>
+                        </Sequence>
+                    </Compose>
+                </OptionAction>
+            </ChoiceOption>
+        </Choice>
+    </Compose>
+</Agent>

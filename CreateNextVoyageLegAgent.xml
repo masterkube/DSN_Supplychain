@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>CreateNextVoyageLegAgent</AgentName>
+	<ProcessName>TransportationLegs</ProcessName>
+	<AvatarName>LegName</AvatarName>
+	<Element>LegName</Element>
+	<Element>PickVoyage</Element>
+    <Element>ReplyLegDescription</Element>
+	<Element>NextLegDescriptionChannel</Element>
+	<Sequence>
+        <Tell><element><elementName>PickVoyage</elementName></element></Tell>
+        <Ask><action><actionName>GetVoyageDetail</actionName></action><internal>true</internal></Ask>
+        <Compose>
+            <Tell><action><actionName>LegDescription</actionName></action></Tell>
+            <Tell><element><elementName>NextLegDescriptionChannel</elementName></element></Tell>
+            <Tell><action><actionName>GenNextLegDescriptionName</actionName></action><internal>true</internal></Tell>
+            <Sequence>
+                <Ask><action><actionName>GenNextLegDescriptionName</actionName></action><internal>true</internal></Ask>
+                <Tell><element><elementName>ReplyLegDescription</elementName></element></Tell>
+                <Ask><action><actionName>NextLegDescriptionChannel</actionName></action><internal>true</internal></Ask>
+                <Compose>
+                    <Tell><action><actionName>NextLegDetail</actionName></action></Tell>
+                    <!-- <Sequence>
+                        <Ask><action><actionName>AddRoutePoint</actionName></action></Ask>
+                        <Compose>
+                            <AgentCommand><AgentName>RoutePointAgent</AgentName>
+                                <Ask><action><actionName>InvokeRoute</actionName></action><internal>true</internal></Ask>
+                            </AgentCommand>
+                            <Tell><action><actionName>InvokeRoute</actionName></action><internal>true</internal></Tell>
+                        </Compose>
+                        <Ask><action><actionName>ReplyPointInfoToLeg</actionName></action><internal>true</internal></Ask>
+                        <Compose>
+                            <Tell><action><actionName>FirstRoutePoint</actionName></action></Tell>
+                            <AgentCommand><AgentName>AddRoutePointAgent</AgentName></AgentCommand>
+                        </Compose>
+                    </Sequence> -->
+                </Compose>
+            </Sequence>
+        </Compose>
+    </Sequence>
+</Agent>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DistributorPlaceOrderOnPlantAgent</AgentName>
+	<Compose>
+		<Tell><element><elementName>GetPlantChannelToPlaceOrder</elementName></element></Tell>
+		<Choice>
+			<ChoiceOption>
+				<Ask><action><actionName>GetPlantOrder</actionName></action><internal>true</internal></Ask>
+				<OptionAction>
+					<Compose>
+						<Choice>
+							<ChoiceOption>
+								<Tell><action><actionName>PendingOrders</actionName></action></Tell>
+								<OptionAction>
+								</OptionAction>
+							</ChoiceOption>
+							<ChoiceOption>
+								<Ask><action><actionName>DoFullFill</actionName></action></Ask>
+								<OptionAction>
+									<Compose>
+										<Sequence>
+											<Ask><action><actionName>CreateFullFill</actionName></action><internal>true</internal></Ask>
+											<Tell><element><elementName>FullfillOrder</elementName></element></Tell>
+										</Sequence>
+										<Sequence>
+											<Tell><element><elementName>FullFill</elementName></element></Tell>
+											<Tell><action><actionName>CreateFullFill</actionName></action><internal>true</internal></Tell>
+											<AgentCommand><AgentName>DistributorPlaceOrderOnPlantAgent</AgentName></AgentCommand>									
+										</Sequence>
+									</Compose>
+								</OptionAction>
+							</ChoiceOption>
+						</Choice>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>
+		</Choice>
+	</Compose>
+</Agent>

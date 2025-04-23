@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Getting orderqty from upstream and give it to do add current inv of down stream node -->
+<Agent>
+	<AgentName>FullFillAgent</AgentName>
+    <Sequence>
+        <Ask><action><actionName>FullFill</actionName></action><internal>true</internal></Ask>
+        <Tell><action><actionName>DoInventory</actionName></action><internal>true</internal></Tell>
+    </Sequence>
+</Agent>

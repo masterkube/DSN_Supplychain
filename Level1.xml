@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>Level1</AgentName>
+	<Compose>
+		<Tell><action><actionName>SharedProductDetail</actionName></action></Tell>
+		<Tell><action><actionName>GenSharedProductName</actionName></action><internal>true</internal></Tell>
+        <Ask><action><actionName>GenSharedProductName</actionName></action><internal>true</internal></Ask>
+            <Choice>
+                <ChoiceOption>
+                    <Ask><action><actionName>CreatePlantInventory</actionName></action></Ask>
+                    <OptionAction>
+                        <Compose>
+                            <Tell><element><elementName>PickPlant</elementName></element></Tell>
+                            <AgentCommand><AgentName>Level2</AgentName></AgentCommand>
+                        </Compose>
+                    </OptionAction>
+                </ChoiceOption>
+                <ChoiceOption>
+                    <Ask><action><actionName>CreateDistributorInventory</actionName></action></Ask>
+                    <OptionAction>
+                        <Compose>
+                            <Tell><element><elementName>PickDistributor</elementName></element></Tell>
+                            <AgentCommand><AgentName>Level3</AgentName></AgentCommand>
+                        </Compose>
+                    </OptionAction>
+                </ChoiceOption>
+            </Choice>
+	</Compose>
+</Agent>

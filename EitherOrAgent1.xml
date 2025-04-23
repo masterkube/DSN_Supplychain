@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>EitherOrAgent1</AgentName>
+	<Choice>
+			<ChoiceOption>
+				<Ask><action><actionName>ChannelToSignalRythm1</actionName></action><internal>true</internal></Ask>
+				<OptionAction>
+					<Sequence>
+						<Tell><element><elementName>RcvSignalRythm1</elementName></element></Tell>
+						<AgentCommand><AgentName>EitherOrAgent1</AgentName></AgentCommand>
+					</Sequence>
+				</OptionAction>
+			</ChoiceOption>
+			<ChoiceOption>
+				<Ask><action><actionName>PickRythm</actionName></action><internal>true</internal></Ask>
+				<OptionAction>
+					<Compose>
+						<AgentCommand><AgentName>SignalAgent2</AgentName></AgentCommand>
+						<Tell><action><actionName>CreateRythm</actionName></action><internal>true</internal></Tell>
+						<Sequence>
+							<AgentCommand>
+								<AgentName>NextRythmAgent</AgentName>
+								<Ask><action><actionName>CreateRythm</actionName></action><internal>true</internal></Ask>
+							</AgentCommand>
+							<Tell><action><actionName>GetInfo</actionName></action><internal>true</internal></Tell>
+							<Ask><action><actionName>SendInfo</actionName></action><internal>true</internal></Ask>
+						</Sequence>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>		
+		</Choice>
+</Agent>

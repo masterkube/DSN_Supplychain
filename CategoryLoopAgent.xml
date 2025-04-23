@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>CategoryLoopAgent</AgentName>
+	<Sequence>
+		<!-- this action is for product to select this category -->
+		<Ask><action><actionName>PickCategory</actionName></action><internal>true</internal></Ask>
+		<Compose>
+			<AgentCommand><AgentName>RecordRcvdProductAgent</AgentName></AgentCommand>
+			<Ask><action><actionName>InitiateToRecordProduct</actionName></action><internal>true</internal></Ask>
+			<Sequence>
+				<Tell><action><actionName>InitiateToRecordProduct</actionName></action><internal>true</internal></Tell>
+				<Tell><element><elementName>PassProductToRecord</elementName></element></Tell>
+				<AgentCommand><AgentName>CategoryLoopAgent</AgentName></AgentCommand>
+			</Sequence>
+		</Compose>
+	</Sequence>
+</Agent>

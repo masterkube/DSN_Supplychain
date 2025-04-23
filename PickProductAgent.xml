@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>PickProductAgent</AgentName>
+	<Compose>
+		<Tell><action><actionName>SharedProductDetail</actionName></action></Tell>
+		<Sequence>
+			<Tell><action><actionName>PickProduct</actionName></action><internal>true</internal></Tell>
+			<AgentCommand><AgentName>PickProductAgent</AgentName></AgentCommand>
+		</Sequence>
+	</Compose>
+</Agent>

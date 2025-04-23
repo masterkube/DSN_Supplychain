@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DealerAgent</AgentName>
+	<ProcessName>Dealers</ProcessName>
+	<AvatarName>DealerName</AvatarName>
+	<Element>DealerName</Element>
+	<Element>LocationCoordinates</Element>
+	<Compose>
+		<Tell><action><actionName>DealerInfo</actionName></action></Tell>
+		<Tell><action><actionName>GenDealerInfoName</actionName></action><internal>true</internal></Tell>
+		<AgentCommand><AgentName>UpdateInvAgent</AgentName></AgentCommand>
+		<Sequence>
+			<Ask><action><actionName>GenDealerInfoName</actionName></action><internal>true</internal></Ask>
+			<AgentCommand><AgentName>DealerLoopAgent</AgentName></AgentCommand>
+		</Sequence>
+	</Compose>
+</Agent>

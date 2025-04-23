@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>LinkWithSubCategoryAgent</AgentName>
+	<Compose>
+        <Tell><action><actionName>SharedCategoryDetailToNext</actionName></action><internal>true</internal></Tell>
+        <Choice>
+            <ChoiceOption>
+                <!-- this choice is for picking the sub category for this category node -->
+                <Ask><action><actionName>LinkWithSubCategory</actionName></action></Ask>
+                <OptionAction>
+                    <Sequence>
+                        <Tell><element><elementName>LinkCategory</elementName></element></Tell>
+                        <Ask><action><actionName>LinkToPrevCategories</actionName></action></Ask>
+                        <Compose>
+                            <AgentCommand><AgentName>RecordRcvdCategoryAgent</AgentName></AgentCommand>
+                            <Ask><action><actionName>InitiateToRecordCategory</actionName></action><internal>true</internal></Ask>
+                            <Sequence>
+                                <Tell><action><actionName>InitiateToRecordCategory</actionName></action></Tell>
+                                <Tell><element><elementName>PassCategoryToRecord</elementName></element></Tell>
+                                <AgentCommand><AgentName>LinkWithSubCategoryAgent</AgentName></AgentCommand>
+                            </Sequence>
+                        </Compose>					
+                    </Sequence>
+                </OptionAction>
+            </ChoiceOption>
+        </Choice>                
+    </Compose>
+</Agent>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- placing order on plant inventory in a persistent manner from dc's that are connected to this plant -->
+<Agent>
+	<AgentName>PlantOrderAgent</AgentName>
+    <Sequence>
+        <Ask><action><actionName>PlaceOrder</actionName></action></Ask>
+        <Tell><element><elementName>GetPlantOrder</elementName></element></Tell>
+        <Compose>
+            <AgentCommand><AgentName>FullFillAgent</AgentName></AgentCommand>
+            <Sequence>
+                <Ask><action><actionName>GetPlantChannelToPlaceOrder</actionName></action><internal>true</internal></Ask>
+                <AgentCommand><AgentName>PlantOrderAgent</AgentName></AgentCommand>
+            </Sequence>
+        </Compose>
+    </Sequence>
+</Agent>

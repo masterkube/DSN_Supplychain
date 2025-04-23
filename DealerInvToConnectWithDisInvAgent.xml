@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DealerInvToConnectWithDisInvAgent</AgentName>
+	<Sequence>
+		<Replicate>
+			<Compose>
+				<Sequence>
+					<Ask><action><actionName>DistributorInventoryToConnect</actionName></action><internal>true</internal></Ask>
+					<Tell><action><actionName>TriggerNextDealer</actionName></action><internal>true</internal></Tell>
+				</Sequence>
+				<Sequence>
+					<Ask><action><actionName>TriggerNextDealer</actionName></action><internal>true</internal></Ask>
+					<Compose>
+            			<Tell><action><actionName>ShowInventories</actionName></action><internal>true</internal></Tell>
+						<AgentCommand><AgentName>DealerPlaceOrderOnDisInvAgent</AgentName></AgentCommand>
+					</Compose>
+				</Sequence>
+			</Compose>
+		</Replicate>
+		<Compose>
+			<Tell><action><actionName>TriggerDc</actionName></action><internal>true</internal></Tell>
+			<AgentCommand>
+				<AgentName>DealerInvToConnectWithDisInvAgent</AgentName>
+				<Ask><action><actionName>TriggerDc</actionName></action><internal>true</internal></Ask>
+			</AgentCommand>
+		</Compose>
+	</Sequence>
+</Agent>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>CreateCategoryAgent</AgentName>
+	<Sequence>
+    	<Ask><action><actionName>NewCategory</actionName></action></Ask>
+        <Compose>
+			<AgentCommand><AgentName>CategoryAgent</AgentName>
+			    <Ask><action><actionName>InvokeCategoryName</actionName></action><internal>true</internal></Ask>
+			</AgentCommand>
+			<Tell><action><actionName>InvokeCategoryName</actionName></action><internal>true</internal></Tell>
+		</Compose>
+        <!-- <Ask><action><actionName>WithorWithoutProduct</actionName></action><internal>true</internal></Ask>
+		<Tell><element><elementName>WithoutProduct</elementName></element></Tell> -->
+        <AgentCommand><AgentName>CreateCategoryAgent</AgentName></AgentCommand>
+	</Sequence>
+</Agent>

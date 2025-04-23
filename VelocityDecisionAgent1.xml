@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>VelocityDecisionAgent1</AgentName>
+    <Compose>
+        <Decision>
+            <Expression>StockRequired==InvQuantity</Expression>
+            <TrueEvent>
+                <Tell><action><actionName>SglNoVelocity</actionName></action><internal>true</internal></Tell>
+            </TrueEvent>
+            <FalseEvent>
+                <Tell><action><actionName>SglYesVelocity</actionName></action><internal>true</internal></Tell>
+            </FalseEvent>
+        </Decision>
+        <Choice>
+            <ChoiceOption>
+                <Ask><action><actionName>SglNoVelocity</actionName></action><internal>true</internal></Ask>
+                <OptionAction>
+                    <Choice>
+                        <ChoiceOption>
+                            <Ask><action><actionName>RunDecision</actionName></action><internal>true</internal></Ask>
+                            <OptionAction>
+                                <Compose>
+                                    <Tell><action><actionName>InvQuantity</actionName></action><internal>true</internal></Tell>
+                                    <Tell><action><actionName>StockRequired</actionName></action><internal>true</internal></Tell>
+                                    <AgentCommand><AgentName>VelocityDecisionAgent1</AgentName></AgentCommand>
+                                </Compose>                       
+                            </OptionAction>
+                        </ChoiceOption>
+                    </Choice>
+                </OptionAction>
+            </ChoiceOption>
+            <ChoiceOption>
+                <Ask><action><actionName>SglYesVelocity</actionName></action><internal>true</internal></Ask>
+                <OptionAction>
+                    <Compose>
+                        <Tell><action><actionName>StockRequired</actionName></action><internal>true</internal></Tell>
+                        <Tell><action><actionName>InvQuantity</actionName></action><internal>true</internal></Tell>
+                        <AgentCommand><AgentName>VelocityDecisionAgent</AgentName></AgentCommand> 
+                    </Compose>  
+                </OptionAction>
+            </ChoiceOption>
+        </Choice>
+    </Compose>
+</Agent>

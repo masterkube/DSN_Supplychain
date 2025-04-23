@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DealerInventoryAgent</AgentName>
+	<ProcessName>Inventories</ProcessName>
+	<AvatarName>InventoryID</AvatarName>
+	<Element>InventoryID</Element>
+	<Element>SharedProductDetail</Element>
+	<Element>LeadTime</Element>
+	<Element>InventoryInDealer</Element>
+	<Compose>
+		<Sequence>
+			<Ask><action><actionName>ConnectRythm</actionName></action></Ask>
+			<Tell><element><elementName>PickRythm</elementName></element></Tell>
+		</Sequence>
+		<Tell><action><actionName>InventoryInfo</actionName></action></Tell>
+		<Tell><action><actionName>SharedInventoryInfo</actionName></action><internal>true</internal></Tell>
+        <!-- initializing all quantities -->
+        <ArithmeticAgentCommand><AgentExpression>InvQuantity=0</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>LifeofNode=1</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>StockRequired=0</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>ConstraintValue=0</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>Velocity=0</AgentExpression></ArithmeticAgentCommand>
+		<Choice>
+			<ChoiceOption>
+				<!-- This Below Agent is used to make decision either with cinstraint or velocity -->
+				<Ask><action><actionName>TurnOnConstraintDecision</actionName></action></Ask>
+				<OptionAction>
+					<Compose>
+						<AgentCommand><AgentName>ConstraintDecisionAgent</AgentName>
+							<Ask><action><actionName>RunDecision</actionName></action><internal>true</internal></Ask>
+						</AgentCommand>
+							<!-- Add Constraint agent was adding the constraint value -->
+						<AgentCommand><AgentName>AddConstraintAgent</AgentName></AgentCommand>
+						<!-- agent for accumulator computation and accumulator is used to compute runrate -->
+						<AgentCommand><AgentName>InventoryAccumulatorAgent</AgentName></AgentCommand>
+						<AgentCommand><AgentName>DummyHeartBeatAgent</AgentName></AgentCommand>
+						<Tell><action><actionName>GenInventoryInfoName</actionName></action><internal>true</internal></Tell>
+						<Sequence>
+							<Ask><action><actionName>GenInventoryInfoName</actionName></action><internal>true</internal></Ask>
+							<!-- receving the info of dealer through this action below -->
+							<Ask><element><elementName>InventoryInDealer</elementName></element></Ask>
+							<!-- through the tell element below shared inventory info was gone to upstream node  -->
+							<Tell><element><elementName>DistributorInventoryToConnect</elementName></element></Tell>
+							<!-- getting channel to place order from here to upstream through the action below -->
+							<Ask><action><actionName>GetDealerChannelToPlaceOrder</actionName></action><internal>true</internal></Ask>
+							<Compose>
+								<!-- through the action below we able to see the dealor's info and which product its belongs to -->
+								<Tell><action><actionName>NodeInfo</actionName></action></Tell>
+								<!-- The below agent was there to place order from here to its upstream node -->
+								<AgentCommand><AgentName>DealerOrderAgent</AgentName></AgentCommand>		
+							</Compose>
+						</Sequence>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>
+			<ChoiceOption>
+				<!-- This Below Agent is used to make decision either with cinstraint or velocity -->
+				<Ask><action><actionName>TurnOnVelocityDecision</actionName></action></Ask>
+				<OptionAction>
+					<Compose>
+						<AgentCommand><AgentName>VelocityDecisionAgent1</AgentName></AgentCommand>
+						<!-- The Below Agent increase the count life of node when we click on trigger heartbeat button -->
+						<AgentCommand><AgentName>HeartBeatAgent</AgentName></AgentCommand>
+						<!-- Through this action we able to see the runrate of this node -->
+						<Tell><action><actionName>SalesVelocity</actionName></action></Tell>
+						<!-- agent for accumulator computation and accumulator is used to compute runrate -->
+						<AgentCommand><AgentName>InventoryAccumulatorAgent</AgentName></AgentCommand>
+						<Tell><action><actionName>GenInventoryInfoName</actionName></action><internal>true</internal></Tell>
+						<Sequence>
+							<Ask><action><actionName>GenInventoryInfoName</actionName></action><internal>true</internal></Ask>
+							<!-- receving the info of dealer through this action below -->
+							<Ask><element><elementName>InventoryInDealer</elementName></element></Ask>
+							<!-- through the tell element below shared inventory info was gone to upstream node  -->
+							<Tell><element><elementName>DistributorInventoryToConnect</elementName></element></Tell>
+							<!-- getting channel to place order from here to upstream through the action below -->
+							<Ask><action><actionName>GetDealerChannelToPlaceOrder</actionName></action><internal>true</internal></Ask>
+							<Compose>
+								<!-- through the action below we able to see the dealor's info and which product its belongs to -->
+								<Tell><action><actionName>NodeInfo</actionName></action></Tell>
+								<!-- The below agent was there to place order from here to its upstream node -->
+								<AgentCommand><AgentName>DealerOrderAgent</AgentName></AgentCommand>		
+							</Compose>
+						</Sequence>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>
+		</Choice>
+	</Compose>
+</Agent>

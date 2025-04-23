@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>SignallingInvAgent</AgentName>
+	<Sequence>
+        <Tell><element><elementName>SignalDownStream</elementName></element></Tell>
+        <Ask><action><actionName>ChannelToSignalDownStream</actionName></action><internal>true</internal></Ask>
+    </Sequence>
+</Agent>

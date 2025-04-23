@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>UpdateInvAgent</AgentName>
+	<Choice>
+		<ChoiceOption>
+			<Ask><action><actionName>UpdateInv</actionName></action></Ask>
+			<OptionAction>
+				<Compose>
+					<Tell><action><actionName>FindRunDecision</actionName></action><internal>true</internal></Tell>
+					<Sequence>
+						<Ask><action><actionName>FindRunDecision</actionName></action><internal>true</internal></Ask>
+                        <Tell><element><elementName>RunDecision</elementName></element></Tell>
+                        <AgentCommand><AgentName>UpdateInvAgent</AgentName></AgentCommand>
+					</Sequence>
+				</Compose>
+			</OptionAction>
+		</ChoiceOption>
+	</Choice>
+</Agent>

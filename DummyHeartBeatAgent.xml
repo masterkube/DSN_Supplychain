@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DummyHeartBeatAgent</AgentName>
+	<Choice>
+		<ChoiceOption>
+			<Ask><action><actionName>SignalDownStream</actionName></action><internal>true</internal></Ask>
+			<OptionAction>
+				<Compose>
+					<Sequence>
+						<Tell><element><elementName>ChannelToSignalDownStream</elementName></element></Tell>
+						<ArithmeticAgentCommand><AgentExpression>LifeofNode=LifeofNode+1</AgentExpression></ArithmeticAgentCommand>
+						<Tell><action><actionName>LoopThis</actionName></action><internal>true</internal></Tell>
+					</Sequence>
+					<Sequence>
+						<Ask><action><actionName>LoopThis</actionName></action><internal>true</internal></Ask>
+						<AgentCommand><AgentName>DummyHeartBeatAgent</AgentName></AgentCommand>
+					</Sequence>
+				</Compose>
+			</OptionAction>
+		</ChoiceOption>
+	</Choice>
+</Agent>

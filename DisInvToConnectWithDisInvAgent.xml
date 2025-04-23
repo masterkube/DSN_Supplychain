@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DisInvToConnectWithDisInvAgent</AgentName>
+	<Sequence>
+		<Replicate>
+			<Compose>
+				<Sequence>
+					<Ask><action><actionName>PrevDisInventoryToConnect</actionName></action><internal>true</internal></Ask>
+					<!-- <Tell><element><elementName>GetDisChannelToPlaceOrder</elementName></element></Tell> -->
+					<Tell><action><actionName>TriggerNextdistributor</actionName></action><internal>true</internal></Tell>
+				</Sequence>
+				<Sequence>
+					<Ask><action><actionName>TriggerNextdistributor</actionName></action><internal>true</internal></Ask>
+					<Compose>
+						<Tell><action><actionName>ShowInventories</actionName></action><internal>true</internal></Tell>
+						<AgentCommand><AgentName>DisPlaceOrderOnDisInvAgent</AgentName></AgentCommand>
+					</Compose>
+				</Sequence>
+			</Compose>
+		</Replicate>
+		<Compose>
+			<Tell><action><actionName>TriggerDcToDc</actionName></action><internal>true</internal></Tell>
+			<AgentCommand>
+				<AgentName>DisInvToConnectWithDisInvAgent</AgentName>
+				<Ask><action><actionName>TriggerDcToDc</actionName></action><internal>true</internal></Ask>
+			</AgentCommand>
+		</Compose>
+	</Sequence>
+</Agent>

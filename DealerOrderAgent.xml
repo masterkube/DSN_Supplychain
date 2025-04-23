@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!-- placing order on DC inventory in a persistent manner from dc's that are connected to this plant -->
+<Agent>
+	<AgentName>DealerOrderAgent</AgentName>
+    <Sequence>
+        <Ask><action><actionName>PlaceOrder</actionName></action></Ask>
+        <Tell><element><elementName>GetDealerOrder</elementName></element></Tell>
+        <AgentCommand><AgentName>FullFillAgent</AgentName></AgentCommand>
+        <Ask><action><actionName>GetDealerChannelToPlaceOrder</actionName></action><internal>true</internal></Ask>
+        <AgentCommand><AgentName>DealerOrderAgent</AgentName></AgentCommand>
+    </Sequence>
+</Agent>

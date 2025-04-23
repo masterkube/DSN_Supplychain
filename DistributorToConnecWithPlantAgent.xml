@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DistributorToConnecWithPlantAgent</AgentName>
+	<Sequence>
+		<Replicate>
+			<Compose>
+				<Sequence>
+					<Ask><action><actionName>PlantInventoryToConnect</actionName></action><internal>true</internal></Ask>
+					<!-- <Tell><element><elementName>GetPlantChannelToPlaceOrder</elementName></element></Tell> -->
+					<Tell><action><actionName>TeriggerToCollapse</actionName></action><internal>true</internal></Tell>
+				</Sequence>
+				<Sequence>
+					<Ask><action><actionName>TeriggerToCollapse</actionName></action><internal>true</internal></Ask>
+					<Compose>
+						<Tell><action><actionName>ShowInventories</actionName></action><internal>true</internal></Tell>
+						<AgentCommand><AgentName>DistributorPlaceOrderOnPlantAgent</AgentName></AgentCommand>
+						<!-- <AgentCommand><AgentName>PlantRunrateAgent</AgentName></AgentCommand> -->
+					</Compose>
+				</Sequence>
+			</Compose>
+		</Replicate>
+		<Compose>
+			<Tell> <action> <actionName>TriggerPlantConnection</actionName> </action> <internal>true</internal> </Tell>
+			<AgentCommand>
+				<AgentName>DistributorToConnecWithPlantAgent</AgentName>
+				<Ask> <action> <actionName>TriggerPlantConnection</actionName> </action> <internal>true</internal> </Ask>
+			</AgentCommand>
+		</Compose>
+	</Sequence>
+</Agent>

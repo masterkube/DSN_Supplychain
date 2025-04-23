@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>CreateRythmAgent</AgentName>
+	<Sequence>
+        <AgentCommand>
+            <AgentName>RythmAgent</AgentName>
+            <Ask><action><actionName>EnterTypeofRythm</actionName></action></Ask>
+        </AgentCommand>
+		<AgentCommand><AgentName>CreateRythmAgent</AgentName></AgentCommand>
+    </Sequence>
+</Agent>

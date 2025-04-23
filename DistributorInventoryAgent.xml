@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DistributorInventoryAgent</AgentName>
+	<ProcessName>Inventories</ProcessName>
+	<AvatarName>InventoryID</AvatarName>
+	<Element>InventoryID</Element>
+	<Element>SharedProductDetail</Element>
+	<Element>InventoryInNewDistributor</Element>
+	<Element>LeadTime</Element>
+	<Compose>
+		<Sequence>
+			<Ask><action><actionName>ConnectRythm</actionName></action></Ask>
+			<Tell><element><elementName>PickRythm</elementName></element></Tell>
+		</Sequence>
+		<AgentCommand><AgentName>UpdateInvAgent</AgentName></AgentCommand>
+		<Tell><action><actionName>InventoryInfo</actionName></action></Tell>
+        <!-- initializing all quantities -->
+		<ArithmeticAgentCommand><AgentExpression>InvQuantity=0</AgentExpression></ArithmeticAgentCommand>
+        <ArithmeticAgentCommand><AgentExpression>InventoryAccumulator=0</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>LifeofNode=1</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>ConstraintValue=0</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>StockRequired=0</AgentExpression></ArithmeticAgentCommand>
+		<Ask><element><elementName>InventoryInNewDistributor</elementName></element></Ask>
+		<Tell><action><actionName>NodeInfo</actionName></action></Tell>
+		<Choice>
+			<ChoiceOption>
+				<!-- This Below Agent is used to make decision either with cinstraint or velocity -->
+				<Ask><action><actionName>TurnOnConstraintDecision</actionName></action></Ask>
+				<OptionAction>
+					<Compose>
+						<AgentCommand><AgentName>ConstraintDecisionAgent</AgentName>
+							<Ask><action><actionName>RunDecision</actionName></action><internal>true</internal></Ask>
+						</AgentCommand>
+						<AgentCommand><AgentName>DummyHeartBeatAgent</AgentName></AgentCommand>
+						<!-- Add Constraint agent was adding the constraint value -->
+						<AgentCommand><AgentName>AddConstraintAgent</AgentName></AgentCommand>
+						<AgentCommand><AgentName>DealerInvToConnectWithDisInvAgent</AgentName></AgentCommand>
+						<AgentCommand><AgentName>DisInvToConnectWithDisInvAgent</AgentName></AgentCommand>
+						<AgentCommand><AgentName>InventoryAccumulatorAgent</AgentName></AgentCommand>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>
+			<ChoiceOption>
+				<!-- This Below Agent is used to make decision either with cinstraint or velocity -->
+				<Ask><action><actionName>TurnOnVelocityDecision</actionName></action></Ask>
+				<OptionAction>
+					<Compose>
+						<AgentCommand><AgentName>VelocityDecisionAgent1</AgentName></AgentCommand>
+						<!-- The Below Agent increase the count life of node when we click on trigger heartbeat button -->
+						<AgentCommand><AgentName>HeartBeatAgent</AgentName></AgentCommand>
+						<!-- below 2 agents for having connection with down stream and receive orders from it  -->
+						<AgentCommand><AgentName>DealerInvToConnectWithDisInvAgent</AgentName></AgentCommand>
+						<AgentCommand><AgentName>DisInvToConnectWithDisInvAgent</AgentName></AgentCommand>
+						<Tell><action><actionName>SalesVelocity</actionName></action></Tell>
+						<!-- agent for accumulator computation and accumulator is used to compute velocity -->
+						<AgentCommand><AgentName>InventoryAccumulatorAgent</AgentName></AgentCommand>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>
+		</Choice>
+	</Compose>
+</Agent>

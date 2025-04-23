@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DisInvForDistributorInventoryAgent</AgentName>
+	<ProcessName>Inventories</ProcessName>
+	<AvatarName>InventoryID</AvatarName>
+	<Element>InventoryID</Element>
+	<Element>LeadTime</Element>
+	<Element>SharedProductDetail</Element>
+	<Element>NextInventoryInDistributor</Element>
+	<Compose>
+		<Sequence>
+			<Ask><action><actionName>ConnectRythm</actionName></action></Ask>
+			<Tell><element><elementName>PickRythm</elementName></element></Tell>
+		</Sequence>
+		<Tell><action><actionName>InventoryInfo</actionName></action></Tell>
+		<Tell><action><actionName>SharedInventoryInfo</actionName></action><internal>true</internal></Tell>
+        <!-- initializing all quantities -->
+        <ArithmeticAgentCommand><AgentExpression>InvQuantity=0</AgentExpression></ArithmeticAgentCommand>
+        <ArithmeticAgentCommand><AgentExpression>InventoryAccumulator=0</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>LifeofNode=1</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>StockRequired=0</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>ConstraintValue=0</AgentExpression></ArithmeticAgentCommand>
+		<ArithmeticAgentCommand><AgentExpression>Velocity=0</AgentExpression></ArithmeticAgentCommand>
+		<Choice>
+			<ChoiceOption>
+				<!-- This Below Agent is used to make decision either with cinstraint or velocity -->
+				<Ask><action><actionName>TurnOnConstraintDecision</actionName></action></Ask>
+				<OptionAction>
+					<Compose>
+						<AgentCommand><AgentName>ConstraintDecisionAgent</AgentName>
+							<Ask><action><actionName>RunDecision</actionName></action><internal>true</internal></Ask>
+						</AgentCommand>
+							<!-- Add Constraint agent was adding the constraint value -->
+						<AgentCommand><AgentName>AddConstraintAgent</AgentName></AgentCommand>
+						<!-- Dealer was able to connect through this agent mentioned below  -->
+						<AgentCommand><AgentName>DealerInvToConnectWithDisInvAgent</AgentName></AgentCommand>
+						<!-- another distributor where able to connect this distributor through this agent below  -->
+						<AgentCommand><AgentName>DisInvToConnectWithDisInvAgent</AgentName></AgentCommand>
+						<!-- The Below Agent is for computing the Accumulator Value Autotmatically after received the order from down stream  -->
+						<AgentCommand><AgentName>InventoryAccumulatorAgent</AgentName></AgentCommand>
+						<Tell><action><actionName>GenInventoryInfoName</actionName></action><internal>true</internal></Tell>
+						<Sequence>
+							<Ask><action><actionName>GenInventoryInfoName</actionName></action><internal>true</internal></Ask>
+							<!-- Getting line no 23's element and distributors info thorough this line below -->
+							<Ask><element><elementName>NextInventoryInDistributor</elementName></element></Ask>
+							<!-- through the element below lineno 25's element and shared inventory info was gone to upstream node  -->
+							<Tell><element><elementName>PrevDisInventoryToConnect</elementName></element></Tell>
+							<!-- getting channel to place order from here to upstream through the action below -->
+							<Ask><action><actionName>GetDisChannelToPlaceOrder</actionName></action><internal>true</internal></Ask>
+							<Compose>
+								<!-- through the action below we able to see the distributors info and which product its belongs to -->
+								<Tell><action><actionName>NodeInfo</actionName></action></Tell>
+								<!-- The below agent was there to place order from here to its upstream node -->
+								<AgentCommand><AgentName>DistributorOrderAgent</AgentName></AgentCommand>
+							</Compose>
+						</Sequence>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>
+			<ChoiceOption>
+				<!-- This Below Agent is used to make decision either with cinstraint or velocity -->
+				<Ask><action><actionName>TurnOnVelocityDecision</actionName></action></Ask>
+				<OptionAction>
+					<Compose>
+						<AgentCommand><AgentName>VelocityDecisionAgent1</AgentName></AgentCommand>
+						<!-- The Below Agent increase the count life of node when we click on trigger heartbeat button -->
+						<AgentCommand><AgentName>HeartBeatAgent</AgentName></AgentCommand>
+						<!-- Dealer was able to connect through this agent mentioned below  -->
+						<AgentCommand><AgentName>DealerInvToConnectWithDisInvAgent</AgentName></AgentCommand>
+						<!-- another distributor where able to connect this distributor through this agent below  -->
+						<AgentCommand><AgentName>DisInvToConnectWithDisInvAgent</AgentName></AgentCommand>
+						<!-- Through this action we able to see the runrate of this node -->
+						<Tell><action><actionName>SalesVelocity</actionName></action></Tell>
+						<!-- The Below Agent is for computing the Accumulator Value Autotmatically after received the order from down stream  -->
+						<AgentCommand><AgentName>InventoryAccumulatorAgent</AgentName></AgentCommand>
+						<Tell><action><actionName>GenInventoryInfoName</actionName></action><internal>true</internal></Tell>
+						<Sequence>
+							<Ask><action><actionName>GenInventoryInfoName</actionName></action><internal>true</internal></Ask>
+							<!-- Getting line no 23's element and distributors info thorough this line below -->
+							<Ask><element><elementName>NextInventoryInDistributor</elementName></element></Ask>
+							<!-- through the element below lineno 25's element and shared inventory info was gone to upstream node  -->
+							<Tell><element><elementName>PrevDisInventoryToConnect</elementName></element></Tell>
+							<!-- getting channel to place order from here to upstream through the action below -->
+							<Ask><action><actionName>GetDisChannelToPlaceOrder</actionName></action><internal>true</internal></Ask>
+							<Compose>
+								<!-- through the action below we able to see the distributors info and which product its belongs to -->
+								<Tell><action><actionName>NodeInfo</actionName></action></Tell>
+								<!-- The below agent was there to place order from here to its upstream node -->
+								<AgentCommand><AgentName>DistributorOrderAgent</AgentName></AgentCommand>
+							</Compose>
+						</Sequence>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>
+		</Choice>
+	</Compose>
+</Agent>

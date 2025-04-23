@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>InventoryAccumulatorAgent</AgentName>
+    <Compose>
+        <Choice>
+            <ChoiceOption>
+                <Ask><action><actionName>FullfillOrder</actionName></action><internal>true</internal></Ask>
+                <OptionAction>
+                    <Compose>
+                        <Sequence>
+                            <AgentCommand><AgentName>ReduceInvAgent</AgentName></AgentCommand>
+                            <Tell><action><actionName>FindRunDecision</actionName></action><internal>true</internal></Tell>
+                        </Sequence>
+                        <Sequence>
+                            <Ask><action><actionName>FindRunDecision</actionName></action><internal>true</internal></Ask>
+                            <Tell><element><elementName>RunDecision</elementName></element></Tell>
+                            <AgentCommand><AgentName>InventoryAccumulatorAgent</AgentName></AgentCommand>
+                        </Sequence>
+                    </Compose> 
+                </OptionAction>
+            </ChoiceOption>
+            <ChoiceOption>
+                <Ask><action><actionName>DoInventory</actionName></action><internal>true</internal></Ask>
+                <OptionAction>
+                    <Compose>
+                        <Sequence>
+                            <AgentCommand><AgentName>AddwithInvAgent</AgentName></AgentCommand>
+                            <Tell><action><actionName>FindRunDecision</actionName></action><internal>true</internal></Tell>
+                        </Sequence>
+                        <Sequence>
+                            <Ask><action><actionName>FindRunDecision</actionName></action><internal>true</internal></Ask>
+                            <Tell><element><elementName>RunDecision</elementName></element></Tell>
+                            <AgentCommand><AgentName>InventoryAccumulatorAgent</AgentName></AgentCommand>
+                        </Sequence>
+                    </Compose> 
+                </OptionAction>
+            </ChoiceOption>
+        </Choice>
+    </Compose>
+</Agent>

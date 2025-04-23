@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>CategoryAgent</AgentName>
+	<ProcessName>Categories</ProcessName>
+	<AvatarName>CategoryName</AvatarName>
+	<Element>CategoryName</Element>
+	<!-- <Element>WithorWithoutProduct</Element> -->
+	<Compose>
+		<Tell><action><actionName>CategoryDetail</actionName></action></Tell>
+		<Tell><action><actionName>GenCategoryDetail</actionName></action><internal>true</internal></Tell>
+		<Sequence>
+			<Ask><action><actionName>GenCategoryDetail</actionName></action><internal>true</internal></Ask>
+			<Compose>
+				<AgentCommand><AgentName>LinkWithSubCategoryAgent</AgentName></AgentCommand>
+				<AgentCommand><AgentName>LinkCategoryAgent</AgentName></AgentCommand>
+				<AgentCommand><AgentName>CategoryLoopAgent</AgentName></AgentCommand>
+			</Compose>
+		</Sequence>
+	</Compose>
+</Agent>

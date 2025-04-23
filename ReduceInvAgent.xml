@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>ReduceInvAgent</AgentName>
+    <Sequence>
+        <Compose>
+            <ArithmeticAgentCommand><AgentExpression>InventoryAccumulator=InventoryAccumulator+OrderQuantity</AgentExpression></ArithmeticAgentCommand>
+            <Tell><action><actionName>OrderQuantity</actionName></action><internal>true</internal></Tell>
+        </Compose>
+        <Compose>
+            <ArithmeticAgentCommand><AgentExpression>InvQuantity=InvQuantity-OrderQuantity</AgentExpression></ArithmeticAgentCommand>
+            <Tell><action><actionName>InvQuantity</actionName></action><internal>true</internal></Tell>
+            <Tell><action><actionName>OrderQuantity</actionName></action><internal>true</internal></Tell>
+        </Compose>
+    </Sequence>
+</Agent>

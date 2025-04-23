@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>NextRythmAgent1</AgentName>
+	<ProcessName>Rythm</ProcessName>
+	<AvatarName>RythmName</AvatarName>
+	<Element>RythmName</Element>
+	<Element>GetInfo1</Element>
+	<Compose>
+		<Tell><action><actionName>RythmInfo</actionName></action></Tell>
+        <Sequence>
+            <Ask><element><elementName>GetInfo1</elementName></element><internal>true</internal></Ask>
+            <Tell><element><elementName>SendInfo1</elementName></element><internal>true</internal></Tell>
+			<Tell><action><actionName>RcvSignalRythm1</actionName></action><internal>true</internal></Tell>
+		</Sequence>
+		<Choice>
+			<ChoiceOption>
+				<Ask><action><actionName>ChannelToSignalRythm1</actionName></action><internal>true</internal></Ask>
+				<OptionAction>
+					<Sequence>
+						<Tell><element><elementName>RcvSignalRythm1</elementName></element></Tell>
+						<AgentCommand><AgentName>EitherOrAgent1</AgentName></AgentCommand>
+					</Sequence>
+				</OptionAction>
+			</ChoiceOption>
+			<ChoiceOption>
+				<Ask><action><actionName>PickRythm</actionName></action><internal>true</internal></Ask>
+				<OptionAction>
+					<Compose>
+						<AgentCommand><AgentName>SignalAgent2</AgentName></AgentCommand>
+						<Tell><action><actionName>CreateRythm</actionName></action><internal>true</internal></Tell>
+						<Sequence>
+							<AgentCommand>
+								<AgentName>NextRythmAgent</AgentName>
+								<Ask><action><actionName>CreateRythm</actionName></action><internal>true</internal></Ask>
+							</AgentCommand>
+							<Tell><action><actionName>GetInfo</actionName></action><internal>true</internal></Tell>
+							<Ask><action><actionName>SendInfo</actionName></action><internal>true</internal></Ask>
+						</Sequence>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>		
+		</Choice>
+    </Compose>
+</Agent>

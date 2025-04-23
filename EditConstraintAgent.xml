@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>EditConstraintAgent</AgentName>
+    <Compose>
+        <Choice>
+            <ChoiceOption>
+                <Ask><action><actionName>EditConstraint</actionName></action></Ask>
+                <OptionAction>
+                    <Compose>
+                        <Tell><action><actionName>FindRunDecision</actionName></action><internal>true</internal></Tell>
+                        <Sequence>
+                            <Ask><action><actionName>FindRunDecision</actionName></action><internal>true</internal></Ask>
+                            <Tell><element><elementName>RunDecision</elementName></element></Tell>
+                            <AgentCommand><AgentName>EditConstraintAgent</AgentName></AgentCommand>
+                        </Sequence>
+				    </Compose>
+                </OptionAction>
+            </ChoiceOption>
+        </Choice>
+    </Compose>
+</Agent>

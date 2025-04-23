@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>SignalAgent1</AgentName>
+	<Compose>
+        <Sequence>
+            <Ask><action><actionName>SignalRythm</actionName></action><internal>true</internal></Ask>
+            <Tell><element><elementName>ChannelToSignalRythm</elementName></element></Tell>
+            <Tell><action><actionName>TriggerNextNode</actionName></action><internal>true</internal></Tell>
+        </Sequence>
+        <Sequence>
+            <Ask><action><actionName>TriggerNextNode</actionName></action><internal>true</internal></Ask>
+            <Tell><element><elementName>ChannelToSignalRythm1</elementName></element></Tell>
+            <Ask><action><actionName>RcvSignalRythm1</actionName></action><internal>true</internal></Ask>
+            <AgentCommand><AgentName>SignalInvAgent</AgentName></AgentCommand>
+            <AgentCommand><AgentName>SignalAgent1</AgentName></AgentCommand>
+        </Sequence>
+    </Compose>
+</Agent>

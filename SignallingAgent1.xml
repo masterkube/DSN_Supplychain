@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>SignallingAgent1</AgentName>
+	<Choice>
+        <ChoiceOption>
+		    <Ask><action><actionName>TriggerHeartBeat</actionName></action></Ask>
+            <OptionAction>
+                <Sequence>
+                    <AgentCommand><AgentName>SignallingNextNodeAgent1</AgentName></AgentCommand>
+                    <AgentCommand><AgentName>SignallingInvAgent</AgentName></AgentCommand>
+                    <AgentCommand><AgentName>SignallingAgent1</AgentName></AgentCommand>
+                </Sequence>
+            </OptionAction>
+        </ChoiceOption>
+    </Choice>
+</Agent>

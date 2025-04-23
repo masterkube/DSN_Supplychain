@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>DisPlaceOrderOnDisInvAgent</AgentName>
+	<Compose>
+		<Tell><element><elementName>GetDisChannelToPlaceOrder</elementName></element></Tell>
+		<Choice>
+			<ChoiceOption>
+				<Ask><action><actionName>GetDistributorOrder</actionName></action><internal>true</internal></Ask>
+				<OptionAction>
+					<Compose>
+						<Choice>
+							<ChoiceOption>
+								<Tell><action><actionName>PendingOrders</actionName></action></Tell>
+								<OptionAction>
+								</OptionAction>
+							</ChoiceOption>
+							<ChoiceOption>
+								<Ask><action><actionName>DoFullFill</actionName></action></Ask>
+								<OptionAction>
+									<Compose>
+										<Sequence>
+											<Tell><action><actionName>CreateFullFill</actionName></action><internal>true</internal></Tell>
+											<Tell><element><elementName>FullfillOrder</elementName></element></Tell>
+										</Sequence>
+										<Sequence>
+											<Tell><element><elementName>FullFill</elementName></element></Tell>
+											<AgentCommand><AgentName>DisPlaceOrderOnDisInvAgent</AgentName></AgentCommand>
+											<Ask><action><actionName>CreateFullFill</actionName></action><internal>true</internal></Ask>
+										</Sequence>
+									</Compose>
+								</OptionAction>
+							</ChoiceOption>
+						</Choice>
+					</Compose>
+				</OptionAction>
+			</ChoiceOption>
+		</Choice>
+	</Compose>
+</Agent>

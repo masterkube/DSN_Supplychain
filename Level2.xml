@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Agent>
+	<AgentName>Level2</AgentName>
+	<Compose>
+		<Tell><action><actionName>SharedProductDetail</actionName></action></Tell>
+		<Tell><action><actionName>GenSharedProductName</actionName></action><internal>true</internal></Tell>
+        <Ask><action><actionName>GenSharedProductName</actionName></action><internal>true</internal></Ask>
+        <Sequence>
+            <Choice>
+                <ChoiceOption>
+                    <Ask><action><actionName>ConnectInventoryWithPlant</actionName></action></Ask>
+                    <OptionAction>
+                        <Compose>
+                            <Tell><element><elementName>PickFirstDistributor</elementName></element></Tell>
+                            <AgentCommand><AgentName>Level3</AgentName></AgentCommand>
+                        </Compose>
+                    </OptionAction>
+                </ChoiceOption>
+            </Choice>
+        </Sequence>
+	</Compose>
+</Agent>
